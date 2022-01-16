@@ -1,5 +1,7 @@
+
 import pygame
 import random
+import time
 
 #game running
 pygame.init()
@@ -34,6 +36,7 @@ ArrowDown=pygame.image.load("ArrowDown.png")
 ArrowDownX=330
 ArrowDownY=500
 
+
 ArrowLeft=pygame.image.load("ArrowLeft.png")
 ArrowLeftX=-10
 ArrowLeftY=230
@@ -47,44 +50,52 @@ def Arrows(z,x,y):
     screen.blit(z,(x,y))
 
 #implement amount of arrows
-ArrowCount="up"
+ArrowCount="right"
 #randomizing arrow selection
 DirectionOfArrow=["up","down","left","right"]
-def chooseArrow():
 
+ArrowMovement=[]
+def chooseArrow():
+    global ArrowCount
     #choosing the direction
     DirectionsChoose=random.randint(0,3)
+    print(DirectionsChoose)
     ArrowCount=DirectionOfArrow[DirectionsChoose]
+    
+    print(ArrowCount)
     #making sure the movement
+
     if ArrowCount == "up":
         Arrows(ArrowUp,ArrowUpX,ArrowUpY)
     elif ArrowCount =="down":
-        Arrows(ArrowDown,ArrowDownX,ArrowDownY)
+       Arrows(ArrowDown,ArrowDownX,ArrowDownY)
     elif ArrowCount =="left":
         Arrows(ArrowLeft,ArrowLeftX,ArrowLeftY)
     elif ArrowCount =="right":
         Arrows(ArrowRight,ArrowRightX,ArrowRightY)
     else:
         pass
+    
+    
 
 #shield blocking and arrow hitting shield
 def Blocked(ArrowType):
-    if ArrowType==ArrowRight:
+    if ArrowType=="right":
         if ArrowRightX == 360 and playerShieldX==360:
             return True
         else:
             return False
-    elif ArrowType==ArrowLeft:
+    elif ArrowType=="left":
         if ArrowLeftX == 300 and playerShieldX==300:
             return True
         else:
             return False
-    elif ArrowType==ArrowUp:
+    elif ArrowType=="up":
         if ArrowUpY == 200 and playerShieldY==209:
             return True
         else:
             return False
-    elif ArrowType==ArrowDown:
+    elif ArrowType=="down":
         if ArrowDownY == 260 and playerShieldY==260:
             return True
         else:
@@ -93,6 +104,7 @@ def Blocked(ArrowType):
         return False
 
 #screen running and looks
+score=0
 
 while runningscreen:
     #moving arrows
@@ -133,13 +145,24 @@ while runningscreen:
     
     screen.fill((0,0,0))
     #starting the code
-    chooseArrow()
-    
     player(playerShield,playerShieldX,playerShieldY)
     hit=Blocked(ArrowCount)
     #continue the code
+    chooseArrow()
+    #Arrows(ArrowRight,ArrowRightX,ArrowRightY)
     if hit==True:
-        chooseArrow()
+        
+        score +=1
+        ArrowUpX=330
+        ArrowUpY=-10
+        ArrowLeftX=-10
+        ArrowLeftY=230
+        ArrowDownX=330
+        ArrowDownY=500
+        ArrowRightX=700
+        ArrowRightY=230
+        
+        print(score)
     else:
         pass
 
