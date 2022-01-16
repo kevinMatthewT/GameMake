@@ -1,7 +1,8 @@
 
 import pygame
 import random
-
+from pygame import mixer
+state="empty"
 #game running
 pygame.init()
 runningscreen= True
@@ -48,30 +49,36 @@ ArrowUpY=-10
 def Arrows(z,x,y):
     screen.blit(z,(x,y))
 
+#song
+mixer.music.load("BackgroundBATH.wav")
+mixer.music.play(-1)
+
 #implement amount of arrows
-ArrowCount="right"
+ArrowCount="up"
 #randomizing arrow selection
 DirectionOfArrow=["up","down","left","right"]
 
-ArrowMovement=[]
 def chooseArrow():
     global ArrowCount
+    global state
     #choosing the direction
     DirectionsChoose=random.randint(0,3)
     print(DirectionsChoose)
     ArrowCount=DirectionOfArrow[DirectionsChoose]
-    
-    print(ArrowCount)
     #making sure the movement
 
     if ArrowCount == "up":
         Arrows(ArrowUp,ArrowUpX,ArrowUpY)
+        state="active"
     elif ArrowCount =="down":
-       Arrows(ArrowDown,ArrowDownX,ArrowDownY)
+        Arrows(ArrowDown,ArrowDownX,ArrowDownY)
+        state="active"
     elif ArrowCount =="left":
         Arrows(ArrowLeft,ArrowLeftX,ArrowLeftY)
+        state="active"
     elif ArrowCount =="right":
         Arrows(ArrowRight,ArrowRightX,ArrowRightY)
+        state="active"
     else:
         pass
     
@@ -80,7 +87,7 @@ def chooseArrow():
 #shield blocking and arrow hitting shield
 def Blocked(ArrowType):
     if ArrowType=="right":
-        if ArrowRightX == 360 and playerShieldX==360:
+        if 350>ArrowRightX < 360 and playerShieldX==360:
             return True
         else:
             return False
@@ -141,16 +148,27 @@ while runningscreen:
                 player(playerShield,playerShieldX,playerShieldY)
         
     
-    
     screen.fill((0,0,0))
     #starting the code
     player(playerShield,playerShieldX,playerShieldY)
     hit=Blocked(ArrowCount)
     #continue the code
-    chooseArrow()
+    while state=="empty":
+        chooseArrow()
+    else :
+        if ArrowCount=="up":
+            Arrows(ArrowUp,ArrowUpX,ArrowUpY)
+        elif ArrowCount=="down":
+            Arrows(ArrowDown,ArrowDownX,ArrowDownY)
+        elif ArrowCount=="right":
+            Arrows(ArrowRight,ArrowRightX,ArrowRightY)
+        elif ArrowCount=="left":
+            Arrows(ArrowLeft,ArrowLeftX,ArrowLeftY)
+        
+    
+        
     #Arrows(ArrowRight,ArrowRightX,ArrowRightY)
     if hit==True:
-        
         score +=1
         ArrowUpX=330
         ArrowUpY=-10
@@ -160,6 +178,7 @@ while runningscreen:
         ArrowDownY=500
         ArrowRightX=700
         ArrowRightY=230
+        state="empty"
         
         print(score)
     else:
