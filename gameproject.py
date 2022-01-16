@@ -49,7 +49,7 @@ ArrowUpY=-10
 def Arrows(z,x,y):
     screen.blit(z,(x,y))
 
-#song
+#song Battle Against a true hero by Toby Fox
 mixer.music.load("BackgroundBATH.wav")
 mixer.music.play(-1)
 
@@ -66,7 +66,7 @@ def chooseArrow():
     print(DirectionsChoose)
     ArrowCount=DirectionOfArrow[DirectionsChoose]
     #making sure the movement
-
+    #state active so that if it happens then it will activate
     if ArrowCount == "up":
         Arrows(ArrowUp,ArrowUpX,ArrowUpY)
         state="active"
@@ -92,17 +92,17 @@ def Blocked(ArrowType):
         else:
             return False
     elif ArrowType=="left":
-        if ArrowLeftX == 300 and playerShieldX==300:
+        if 290<ArrowLeftX< 300 and playerShieldX==300:
             return True
         else:
             return False
     elif ArrowType=="up":
-        if ArrowUpY == 200 and playerShieldY==209:
+        if 190<ArrowUpY <200 and playerShieldY==209:
             return True
         else:
             return False
     elif ArrowType=="down":
-        if ArrowDownY == 260 and playerShieldY==260:
+        if 250<ArrowDownY<260 and playerShieldY==260:
             return True
         else:
             return False
