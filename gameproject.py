@@ -1,7 +1,6 @@
 
 import pygame
 import random
-import time
 
 #game running
 pygame.init()
