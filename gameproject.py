@@ -98,11 +98,13 @@ hits=0
 #shield blocking and arrow hitting shield
 def Blocked(ArrowType):
     global hits
+    global score
     if ArrowType=="right":
         if 350>ArrowRightX < 360 and playerShieldX==360:
             return True
         elif ArrowRightX==340:
             hits +=1
+            score -=1
             print("Hits")
             print(hits)
             return True
@@ -113,8 +115,10 @@ def Blocked(ArrowType):
             return True
         elif ArrowLeftX==320:
             hits +=1
+            score -=1
             print("Hits")
             print(hits)
+
             return True
         else:
             return False
@@ -123,6 +127,7 @@ def Blocked(ArrowType):
             return True
         elif ArrowUpY==220:
             hits +=1
+            score -=1
             print("Hits")
             print(hits)
             return True
@@ -133,6 +138,7 @@ def Blocked(ArrowType):
             return True
         elif ArrowDownY==200:
             hits +=1
+            score -=1
             print("Hits")
             print(hits)
             return True
