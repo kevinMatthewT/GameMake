@@ -63,7 +63,6 @@ def chooseArrow():
     global state
     #choosing the direction
     DirectionsChoose=random.randint(0,3)
-    print(DirectionsChoose)
     ArrowCount=DirectionOfArrow[DirectionsChoose]
     #making sure the movement
     #state active so that if it happens then it will activate
@@ -81,28 +80,61 @@ def chooseArrow():
         state="active"
     else:
         pass
-    
-    
 
+styleText= pygame.font.Font('freesansbold.ttf',16)
+scoreX=3
+scoreY=3
+HitX=3
+HitY=21
+
+def ScoreAndHit(X1,Y1,X2,Y2):
+    TotalScore=styleText.render("Score:" +str(score),True,(255,255,255))
+    TotalHits= styleText.render("Hits:" +str(hits),True,(255,255,255))
+    screen.blit(TotalScore,(X1,Y1))
+    screen.blit(TotalHits,(X2,Y2))
+
+    
+hits=0
 #shield blocking and arrow hitting shield
 def Blocked(ArrowType):
+    global hits
     if ArrowType=="right":
         if 350>ArrowRightX < 360 and playerShieldX==360:
+            return True
+        elif ArrowRightX==340:
+            hits +=1
+            print("Hits")
+            print(hits)
             return True
         else:
             return False
     elif ArrowType=="left":
         if 290<ArrowLeftX< 300 and playerShieldX==300:
             return True
+        elif ArrowLeftX==320:
+            hits +=1
+            print("Hits")
+            print(hits)
+            return True
         else:
             return False
     elif ArrowType=="up":
         if 190<ArrowUpY <200 and playerShieldY==209:
             return True
+        elif ArrowUpY==220:
+            hits +=1
+            print("Hits")
+            print(hits)
+            return True
         else:
             return False
     elif ArrowType=="down":
         if 250<ArrowDownY<260 and playerShieldY==260:
+            return True
+        elif ArrowDownY==200:
+            hits +=1
+            print("Hits")
+            print(hits)
             return True
         else:
             return False
@@ -179,9 +211,9 @@ while runningscreen:
         ArrowRightX=700
         ArrowRightY=230
         state="empty"
-        
+        print("Total Score")
         print(score)
     else:
         pass
-
+    ScoreAndHit(scoreX,scoreY,HitX,HitY)
     pygame.display.update()
